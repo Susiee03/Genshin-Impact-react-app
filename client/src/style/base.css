@@ -1,0 +1,87 @@
+/* clear margin, padding style*/
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+input {
+  margin: 0;
+  padding: 0;
+}
+
+/* box-sizing */
+* {
+  box-sizing: border-box;
+}
+
+/* font style */
+body {
+  font: 16px/1.5 "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei",
+    "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+  color: #333;
+}
+
+/* clear ul style */
+ul,
+ol {
+  list-style: none;
+}
+
+/* clear default em, i style */
+em,
+i {
+  font-style: normal;
+}
+
+/* clear text-decoration style */
+a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* set vertical-align style */
+img {
+  vertical-align: middle;
+}
+
+/* clear input default style */
+input {
+  border: none;
+  outline: none;
+  color: #333;
+}
+
+/* float:left */
+.fl {
+  float: left;
+}
+
+/* float:right */
+.fr {
+  float: right;
+}
+
+/* clearfix */
+.clearfix::before,
+.clearfix::after {
+  content: "";
+  display: table;
+}
+.clearfix::after {
+  clear: both;
+}
+
+/* wrapper */
+.wrapper {
+  width: 1240px;
+  margin: 0 auto;
+}

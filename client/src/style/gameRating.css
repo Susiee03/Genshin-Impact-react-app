@@ -1,0 +1,62 @@
+.game-header {
+  display: flex;
+}
+
+.game-rating {
+  display: flex;
+  position: relative;
+}
+
+.game-summary {
+  margin-top: 20px;
+  margin-left: 30px;
+}
+
+.game-summary h1,
+h2 {
+  margin-bottom: 10px;
+}
+
+.game-summary .storyLine {
+  font-size: medium;
+  font-weight: 700;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  line-height: 2em;
+  text-align: center;
+}
+
+.rating-breakdown {
+  margin-top: 50px;
+  margin-left: 10px;
+}
+
+.rating-breakdown .brakdown {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.rating-breakdown img {
+  width: 100%;
+  height: 140%;
+}
+
+.rating-mark .rating-title {
+  margin-top: 45px;
+  margin-left: 300px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.star-rating {
+  margin-left: 100px;
+  position: relative;
+  top: 155px;
+  left: -300px;
+}
+
+.simple-rating-container {
+  width: 130px;
+  height: 50px;
+}

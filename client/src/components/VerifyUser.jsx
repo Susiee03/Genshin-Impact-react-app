@@ -1,9 +1,9 @@
-//import { useEffect } from "react";
+// import { useEffect } from "react";
 const {useEffect} = require("react");
 const {useAuthToken} = require("../AuthTokenContext");
 const { useNavigate } = require("react-router-dom");
-//import { useAuthToken } from "../AuthTokenContext";
-//import { useNavigate } from "react-router-dom";
+// import { useAuthToken } from "../AuthTokenContext";
+// import { useNavigate } from "react-router-dom";
 
 export default function VerifyUser() {
   const navigate = useNavigate();
@@ -19,6 +19,8 @@ export default function VerifyUser() {
         },
       });
       const user = await data.json();
+      console.log(11111111111111);
+      console.log(user);
       if (user.auth0Id) {
         navigate("/app");
       }

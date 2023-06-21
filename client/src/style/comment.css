@@ -1,0 +1,99 @@
+
+.content-textarea {
+  width: 920px;
+  margin: 5px 38px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.edit-textarea {
+  width: 920px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.comment-form {
+  display: grid;
+  grid-template-columns: auto;
+  grid-gap: 4px;
+}
+
+.comment {
+  border-radius: 1rem;
+  width: 1000px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  background-color: rgba(200, 231, 237, 0.65);
+  box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.35);
+}
+
+.comment-list {
+  padding: 0 2rem;
+  border-radius: 1rem;
+  width: 1000px;
+  margin: 0 auto;
+  max-height: 580px;
+  overflow: auto;
+  background-color: rgba(223, 244, 248, 0.65);
+  box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.35);
+  line-height: 25px;
+}
+
+.comment-item {
+  width: 1000px;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.comment-item p {
+  font-weight: 700;
+}
+
+.comment-item:hover {
+  background-color: rgba(218, 229, 236, 0.411);
+}
+
+.comment-item .deleteBtn {
+  background-color: #047680;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.comment-item .editBtn {
+  background-color: #29435c;
+  color: white;
+  border: none;
+  padding: 5px 15px;
+  cursor: pointer;
+  margin-left: 800px;
+}
+
+.comment .addBtn {
+  background-color: #29435c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 860px;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.comment-item .saveBtn {
+  background-color: #047680;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 860px;
+}
+
+.deleteBtn:hover,
+.editBtn:hover {
+  opacity: 0.8;
+}
