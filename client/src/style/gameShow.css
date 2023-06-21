@@ -3,12 +3,12 @@
   left: 25%;
   align-items: center;
   height: auto;
-  font-size: 22px;
+  font-size: 26px;
   position: absolute;
   padding-top: 10%;
-  color: rgba(3, 46, 77, 0.884);
+  color: rgb(0, 0, 0);
   font-weight: bold;
   font-style: italic;
   font-family: "Times New Roman", Times, serif;
-  
+  text-indent: 2em;
 }
