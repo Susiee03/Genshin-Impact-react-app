@@ -1,0 +1,14 @@
+.introduction {
+  width: 50%;
+  left: 25%;
+  align-items: center;
+  height: auto;
+  font-size: 26px;
+  position: absolute;
+  padding-top: 10%;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  font-style: italic;
+  font-family: "Times New Roman", Times, serif;
+  text-indent: 2em;
+}

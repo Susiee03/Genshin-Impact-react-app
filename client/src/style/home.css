@@ -1,0 +1,45 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 834px;
+  background-image: url("../../images/background.jpeg");
+  background-size: cover;
+}
+
+.welcome-img {
+  background-image: url("../../images/welcomeLogo.png");
+  width: 1024px;
+  height: 440px;
+  display: flex;
+  background-size: 60%;
+  background-repeat: no-repeat;
+  margin-top: -23%;
+  margin-left: 25%;
+}
+
+.btn-primary {
+  background-color: #057ff1eb;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 25px;
+  width: 150px;
+  height: 40px;
+}
+
+.btn-secondary {
+  margin-top: 20px;
+  background-color: #057ff1eb;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  width: 150px;
+  height: 40px;
+}

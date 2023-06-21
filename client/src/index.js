@@ -15,6 +15,9 @@ import UserRating from "./components/UserRating"
 import Profile from "./components/Profile"
 import { AuthTokenProvider } from "./AuthTokenContext";
 import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
+import Gameshow from './components/GameShow';
+import Comment from "./components/Comment";
+import GameRating from "./components/GameRating"
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -33,6 +36,8 @@ const requestedScopes = [
 ];
 
 const container = document.getElementById("root");
+const twitchClientId = process.env.TWITCH_APP_CLIENT_ID;
+const twitchClientSecret = process.env.TWITCH_APP_CLIENT_SECRET;
 
 function RequireAuth({ children }) {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -59,11 +64,11 @@ root.render(
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/verify-user" element={<VerifyUser />} />
-            <Route path="/app/profile" element={<Profile />} />
+            {/* <Route path="/app/profile" element={<Profile />} />
             <Route path="/app/debugger" element={<AuthDebugger />} />
             <Route path="/app/games" element={<Game_list />} />
             <Route path="games/:id" element={<GameDetail />} />
-            <Route path="games/:id/rating" element={<UserRating />} />
+            <Route path="games/:id/rating" element={<UserRating />} /> */}
             <Route
               path="app"
               element={
@@ -72,8 +77,11 @@ root.render(
                 </RequireAuth>
               }
             >
-              <Route index element={<games />} />
-              <Route path="debugger" element={<AuthDebugger />} />
+              <Route index element={<Gameshow />} />
+              <Route path="/app/profile" element={<Profile />} />
+              <Route path="/app/comment" element={<Comment />} />
+              <Route path="/app/rating" element={<GameRating />} />
+              <Route path="/app/debugger" element={<AuthDebugger />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />

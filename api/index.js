@@ -1,14 +1,14 @@
-const express =require("express");
-const morgan =require("morgan");
-const cors =require("cors");
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
 const { PrismaClient } = require("@prisma/client");
 const expressOAuth2JwtBearer = require('express-oauth2-jwt-bearer');
 const auth = expressOAuth2JwtBearer.auth;
-//import { auth } from  'express-oauth2-jwt-bearer'
-//import express from "express";
-//import morgan from "morgan";
-//import cors from "cors";
-//import { PrismaClient } from "@prisma/client";
+// import { auth } from  'express-oauth2-jwt-bearer'
+// import express from "express";
+// import morgan from "morgan";
+// import cors from "cors";
+// import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -26,110 +26,34 @@ const requireAuth = auth({
 });
 
 app.get("/ping", (req, res) => {
-    res.send("pong");
-});
-  
-app.get("/games", requireAuth, async (req, res) => {
-  
-  const auth0Id = req.auth.payload.sub;
-  
-  console.log(auth0Id)
-
-  const user = await prisma.user.findUnique({
-    where: {
-      auth0Id,
-    },
-  });
-
-  const games = await prisma.game.findMany({
-    where: {
-      authorId: user.id,
-    },
-  });
-
-  res.json(games);
-});
-
-// creates a game
-app.post("/games", requireAuth, async (req, res) => {
-  const auth0Id = req.auth.payload.sub;
-
-  const { title } = req.body;
-
-  if (!title) {
-    res.status(400).send("title is required");
-  } else {
-    const newGame = await prisma.game.create({
-      data: {
-        title,
-        author: { connect: { auth0Id } },
-      },
-    });
-    res.status(201).json(newGame);
-  }
+  res.send("pong");
 });
 
 
-//create a rating for the specific game, based on the game id
-app.post("/games/:gameId/rating", requireAuth, async (req, res) => {
-  //const auth0Id = req.auth.payload.sub;
-  const gameId = parseInt(req.params.gameId);
+// Add rating
+app.post("/ratings", requireAuth, async (req, res) => {
   const { rating } = req.body;
-
-  const game = await prisma.game.findUnique({
-    where: {
-      id: gameId,
-    }
-  })
-  if (!game) {
-      res.status(404).send("Game not found.");
-  } else {
-    const newRating = await prisma.rating.create({
-      data: {
-        rating,
-        game: {connect: 
-          {id: gameId}
-        },
-      },
-    });
-  res.status(201).json(newRating);
-  }
-});
-
-//update the rating for the specific game
-app.put("/games/:gameId/ratings", requireAuth, async (req, res) => {
   const auth0Id = req.auth.payload.sub;
-  const { rating } = req.body;
-  const gameId = parseInt(req.params.gameId);
 
   if (!rating) {
-    res.status(400).send("Rating is required.");
-  } else {
+    return res.status(400).send("Rating is required.");
+  }
+
+  try {
     const user = await prisma.user.findUnique({
       where: {
         auth0Id,
-      },
-    });
-    if (!user) {
-      res.status(404).send("User not found.");
-      return;
-    }
-    const game = await prisma.game.findUnique({
-      where: {
-        id: gameId,
       },
     });
 
     const existingRating = await prisma.rating.findFirst({
       where: {
         userId: user.id,
-        gameId: game.id,
       },
     });
 
-    if (!existingRating) {
-      res.status(404).send("Rating not found.");
-    } else {
+    if (existingRating) {
+      // return res.status(400).json({ error: "Rating already exists for this user and game" });
       const updatedRating = await prisma.rating.update({
         where: {
           id: existingRating.id,
@@ -138,74 +62,189 @@ app.put("/games/:gameId/ratings", requireAuth, async (req, res) => {
           rating,
         },
       });
-      res.json(updatedRating);
-    }
-  }
-});
-
-
-
-// deletes a game by id
-app.delete("/games/:id", requireAuth, async (req, res) => {
-  const gameId = parseInt(req.params.id);
-  const auth0Id = req.auth.payload.sub;
-
-  const user = await prisma.user.findUnique({
-    where: {
-      auth0Id,
-    },
-  });
-
-  if (!user) {
-    res.status(404).send("User not found.");
-  } else {
-    const game = await prisma.game.findUnique({
-      where: {
-        id: gameId,
-      },
-    });
-
-    if (!game) {
-      res.status(404).send("Game not found.");
+      res.status(200).json(updatedRating);
     } else {
-      const deletedGame = await prisma.game.delete({
-        where: {
-          id: game.id,
+      const newRating = await prisma.rating.create({
+        data: {
+          rating,
+          user: {
+            connect: { id: user.id },
+          },
         },
       });
-      res.json(deletedGame);
+
+      res.status(201).json(newRating);
     }
+
+  } catch (error) {
+    console.error("Error creating rating:", error);
+    res.status(500).json({ error: "Failed to create rating" });
   }
 });
 
+// Update rating
+app.put("/ratings/:ratingId", requireAuth, async (req, res) => {
+  const ratingId = parseInt(req.params.ratingId);
+  const { rating } = req.body;
 
-// get a game by id
-app.get("/games/:id", requireAuth, async (req, res) => {
-  const gameId = parseInt(req.params.id);
-  const auth0Id = req.auth.payload.sub;
-
-  const user = await prisma.user.findUnique({
-    where: {
-      auth0Id,
-    },
-  });
-
-  if (!user) {
-    res.status(404).send("User not found.");
-  } else {
-    const game = await prisma.game.findUnique({
+  try {
+    const updatedRating = await prisma.rating.update({
       where: {
-        id: gameId,
+        id: ratingId,
+      },
+      data: {
+        rating,
       },
     });
-    if (!game) {
-      res.status(404).send("Game not found.");
-    } else {
-      res.json(game);
-    }
+
+    res.json(updatedRating);
+  } catch (error) {
+    console.error("Error updating rating:", error);
+    res.status(500).json({ error: "Failed to update rating" });
   }
 });
 
+// Get rating from a specific uid
+app.get("/ratings", requireAuth, async (req, res) => {
+  const auth0Id = req.auth.payload.sub;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        auth0Id,
+      },
+    });
+
+    const ratings = await prisma.rating.findMany({
+      where: {
+        userId: user.id,
+      },
+    });
+
+    res.json(ratings);
+  } catch (error) {
+    console.error("Error retrieving ratings:", error);
+    res.status(500).json({ error: "Failed to retrieve ratings" });
+  }
+});
+
+// Add comment
+app.post("/comments", requireAuth, async (req, res) => {
+  const { content } = req.body;
+  const auth0Id = req.auth.payload.sub;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        auth0Id,
+      },
+    });
+
+    const newComment = await prisma.comment.create({
+      data: {
+        content,
+        user: {
+          connect: { id: user.id },
+        },
+      },
+    });
+
+    res.status(201).json(newComment);
+  } catch (error) {
+    console.error("Error creating comment:", error);
+    res.status(500).json({ error: "Failed to create comment" });
+  }
+});
+
+// Delete comment
+app.delete("/comments/:commentId", requireAuth, async (req, res) => {
+  const commentId = parseInt(req.params.commentId);
+
+  try {
+    await prisma.comment.delete({
+      where: {
+        id: commentId,
+      },
+    });
+
+    res.sendStatus(204); // Send a success status without any content
+  } catch (error) {
+    console.error("Error deleting comment:", error);
+    res.status(500).json({ error: "Failed to delete comment" });
+  }
+});
+
+// Update comment
+app.put("/comments/:commentId", requireAuth, async (req, res) => {
+  const commentId = parseInt(req.params.commentId);
+  const { content } = req.body;
+
+  try {
+    const updatedComment = await prisma.comment.update({
+      where: {
+        id: commentId,
+      },
+      data: {
+        content,
+      },
+    });
+
+    res.json(updatedComment);
+  } catch (error) {
+    console.error("Error updating comment:", error);
+    res.status(500).json({ error: "Failed to update comment" });
+  }
+});
+
+// Get comment
+app.get("/comments/:commentId", requireAuth, async (req, res) => {
+  const commentId = parseInt(req.params.commentId);
+
+  try {
+    const comment = await prisma.comment.findUnique({
+      where: {
+        id: commentId,
+      },
+    });
+
+    if (comment) {
+      res.json(comment);
+    } else {
+      res.status(404).json({ error: "Comment not found" });
+    }
+  } catch (error) {
+    console.error("Error retrieving comment:", error);
+    res.status(500).json({ error: "Failed to retrieve comment" });
+  }
+});
+
+// Get all comments
+app.get("/comments", requireAuth, async (req, res) => {
+  try {
+    const comments = await prisma.comment.findMany();
+    res.json(comments);
+  } catch (error) {
+    console.error("Error retrieving comments:", error);
+    res.status(500).json({ error: "Failed to retrieve comments" });
+  }
+});
+
+// Get all comment from a specific user
+app.get("/users/:userId/comments", requireAuth, async (req, res) => {
+  const userId = parseInt(req.params.userId);
+
+  try {
+    const userComments = await prisma.comment.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+
+    res.json(userComments);
+  } catch (error) {
+    console.error("Error retrieving user comments:", error);
+    res.status(500).json({ error: "Failed to retrieve user comments" });
+  }
+});
 
 // get Profile information of authenticated user
 app.get("/me", requireAuth, async (req, res) => {
@@ -239,7 +278,7 @@ app.post("/verify-user", requireAuth, async (req, res) => {
   if (user) {
     res.json(user);
   } else {
-    try{
+    try {
       const newUser = await prisma.user.create({
         data: {
           email,
@@ -256,8 +295,24 @@ app.post("/verify-user", requireAuth, async (req, res) => {
   }
 });
 
+// Use api proxy requests igdb api to avoid cors
+app.post('/api/games', async (req, res) => {
+  const url = 'https://api.igdb.com/v4/games';
+  const { clientId, accessToken } = req.body;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Client-ID': clientId,
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: 'fields *; where id = 119277;',
+  });
+  const data = await response.json();
+  res.json(data);
+});
 
 //Define API routes
 app.listen(8000, () => {
-    console.log("Server running on http://localhost:8000 🎉 🚀");
+  console.log("Server running on http://localhost:8000 🎉 🚀");
 });
