@@ -34,9 +34,9 @@ export default function AppLayout() {
             <li>
               <Link to="/app/rating">Rating</Link>
             </li>
-            {/* <li> */}
-            {/* <Link to="/app/debugger">Debugger</Link> */}
-            {/* </li> */}
+            <li>
+              <Link to="/app/debugger">Debugger</Link>
+            </li>
             <li>
               <Button
                 variant="contained"
