@@ -108,16 +108,11 @@ export default function GameRating() {
           </div>
 
           <div className="game-rating">
-            <div className="rating-breakdown">
-              <strong className="brakdown">Rating breakdown</strong>
-              <img
-                src="https://www.igdb.com/games/genshin-impact/rating_breakdown.svg"
-                alt="Rating breakdown of Genshin Impact"
-              ></img>
-            </div>
-            <div className="rating-mark">
-              {/* <p>Based on {gameData.rating_count} member ratings</p> */}
-              <p className="rating-title">How would you rate this game?</p>
+            <div className="rating-circle">
+              <strong className="title">
+                Based on {gameData.rating_count} member ratings
+              </strong>
+              <div className="rating-value">{Math.floor(gameData.rating)}</div>
             </div>
             <div className="star-rating">
               <SimpleRating />

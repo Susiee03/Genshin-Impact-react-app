@@ -3,8 +3,8 @@
 }
 
 .game-rating {
-  display: flex;
-  position: relative;
+  height: 200px;
+  text-align: center;
 }
 
 .game-summary {
@@ -24,38 +24,44 @@ h2 {
   text-align: center;
 }
 
-.rating-breakdown {
+.star-rating {
+  position: absolute;
+  top: 66%;
+  left: 38%;
+}
+
+.rating-circle {
+  position: relative;
+  width: 100%;
+  height: 100%;
   margin-top: 50px;
   margin-left: 10px;
 }
 
-.rating-breakdown .brakdown {
+.rating-circle .title {
   text-align: center;
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 700;
 }
 
-.rating-breakdown img {
-  width: 100%;
-  height: 140%;
+.rating-circle::before {
+  content: "";
+  position: absolute;
+  top: 60%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: rgba(249, 250, 250, 0.65);
+  box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.35);
 }
 
-.rating-mark .rating-title {
-  margin-top: 45px;
-  margin-left: 300px;
-  text-align: center;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.star-rating {
-  margin-left: 100px;
-  position: relative;
-  top: 155px;
-  left: -300px;
-}
-
-.simple-rating-container {
-  width: 130px;
-  height: 50px;
+.rating-value {
+  position: absolute;
+  top: 60%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  color: #000;
 }
