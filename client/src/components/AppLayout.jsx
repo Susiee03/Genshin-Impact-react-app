@@ -4,12 +4,12 @@ import React from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import Button from "@material-ui/core/Button";
 
 const UserContext = React.createContext();
 
 export default function AppLayout() {
   const { user, isLoading, logout } = useAuth0();
-
 
   if (isLoading) {
     return <div className="loading">Loading...</div>;
@@ -28,29 +28,26 @@ export default function AppLayout() {
             <li>
               <Link to="/app/profile">Profile</Link>
             </li>
-            {/* <li>
-                <Link to="/app/games">Games</Link>
-              </li> */}
             <li>
               <Link to="/app/comment">Comments</Link>
             </li>
             <li>
               <Link to="/app/rating">Rating</Link>
             </li>
+            {/* <li> */}
+            {/* <Link to="/app/debugger">Debugger</Link> */}
+            {/* </li> */}
             <li>
-              <Link to="/app/debugger">Auth Debugger</Link>
-            </li>
-            <li>
-              <button
+              <Button
+                variant="contained"
                 className="exit-button"
                 onClick={() => logout({ returnTo: window.location.origin })}
               >
                 LogOut
-              </button>
+              </Button>
             </li>
           </ul>
         </nav>
-        {/* <div>Welcome 👋 {user.name} </div> */}
       </div>
       <div className="content">
         <Outlet />
