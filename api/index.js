@@ -299,7 +299,8 @@ app.post("/verify-user", requireAuth, async (req, res) => {
 app.post('/api/games', async (req, res) => {
   const url = 'https://api.igdb.com/v4/games';
   const { clientId, accessToken } = req.body;
-  const response = await fetch(url, {
+  const fetch = await import('node-fetch');
+  const response = await fetch.default(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -312,7 +313,7 @@ app.post('/api/games', async (req, res) => {
   res.json(data);
 });
 
-//Define API routes
-app.listen(8000, () => {
-  console.log("Server running on http://localhost:8000 🎉 🚀");
+const PORT = parseInt(process.env.PORT) || 8080;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT} 🎉 🚀`);
 });

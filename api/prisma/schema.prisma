@@ -3,11 +3,15 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+
 }
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+
 }
 
 model Game {
@@ -15,7 +19,6 @@ model Game {
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  // user      User[]
 }
 
 model User {
@@ -25,8 +28,6 @@ model User {
   name    String?
   ratings  Rating? 
   comments Comment[]
-  // game     Game  @relation(fields: [gameId], references: [id])
-  // gameId   Int
 }
 
 model Rating {

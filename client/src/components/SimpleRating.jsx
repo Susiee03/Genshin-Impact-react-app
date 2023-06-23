@@ -21,7 +21,11 @@ export default function SimpleRating() {
       });
       if (response.ok) {
         const data = await response.json();
-        setValue(data[0].rating);
+        if (data.length > 0) {
+          setValue(data[0].rating);
+        } else {
+          setValue(0);
+        }
       } else {
         console.error("Error fetching rating:", response.status);
       }
