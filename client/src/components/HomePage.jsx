@@ -54,8 +54,11 @@ export default function HomePage() {
         )}
       </div>
       <div>
-        <button className="btn-secondary" onClick={signUp}>
-          Create Account
+        <button
+          className="btn-secondary"
+          onClick={() => navigate("/joined-users")}
+        >
+          More
         </button>
       </div>
     </div>

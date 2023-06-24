@@ -7,7 +7,6 @@ import Divider from "@material-ui/core/Divider";
 import EmailIcon from "@material-ui/icons/Email";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
-import CheckIcon from "@material-ui/icons/Check";
 import React from "react";
 import "../style/profile.css";
 
@@ -36,13 +35,6 @@ export default function Profile() {
           </ListItemIcon>
           <ListItemText className="user-sub" primary={user.sub} />
         </ListItem>
-        {/* <ListItem button>
-          <ListItemIcon>
-            <CheckIcon />
-          </ListItemIcon>
-          <ListItemText primary={user.nickname} />
-        </ListItem>
-        <Divider /> */}
       </List>
     </div>
   );

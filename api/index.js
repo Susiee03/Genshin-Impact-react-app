@@ -204,6 +204,9 @@ app.get("/comments/:commentId", requireAuth, async (req, res) => {
       where: {
         id: commentId,
       },
+      include: {
+        user: true,
+      },
     });
 
     if (comment) {
@@ -220,7 +223,11 @@ app.get("/comments/:commentId", requireAuth, async (req, res) => {
 // Get all comments
 app.get("/comments", requireAuth, async (req, res) => {
   try {
-    const comments = await prisma.comment.findMany();
+    const comments = await prisma.comment.findMany({
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
     res.json(comments);
   } catch (error) {
     console.error("Error retrieving comments:", error);
@@ -257,6 +264,23 @@ app.get("/me", requireAuth, async (req, res) => {
   res.json(user);
 });
 
+// Get all joined user
+app.get("/users/joined-users", async (req, res) => {
+  try {
+    const joinedUsers = await prisma.user.findMany(
+      {
+        take: 5,
+        orderBy: {
+          createdAt: 'desc'
+        }
+      }
+    );
+    res.json(joinedUsers);
+  } catch (error) {
+    console.error("Error retrieving joined users:", error);
+    res.status(500).json({ error: "Failed to retrieve joined users:" });
+  }
+});
 
 // verify user status, if not registered in our database we will create it
 app.post("/verify-user", requireAuth, async (req, res) => {
@@ -268,6 +292,7 @@ app.post("/verify-user", requireAuth, async (req, res) => {
   console.log("here")
   console.log(JSON.stringify(req.auth.payload))
   console.log(name);
+  const extractedName = name.split("@")[0];
   const user = await prisma.user.findUnique({
     where: {
       auth0Id,
@@ -283,7 +308,7 @@ app.post("/verify-user", requireAuth, async (req, res) => {
         data: {
           email,
           auth0Id,
-          name,
+          name: extractedName,
         },
       });
       res.json(newUser);

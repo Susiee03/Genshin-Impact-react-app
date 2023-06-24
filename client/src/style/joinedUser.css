@@ -1,0 +1,21 @@
+.joined-users {
+  margin-top: 50px;
+  background-color: rgba(200, 231, 237, 0.65);
+  box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.35);
+  width: 500px;
+  margin: 50px auto;
+  border-radius: 1rem;
+}
+
+.joined-users h2 {
+  text-align: center;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  padding: 10px;
+}
+
+.center-button {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}

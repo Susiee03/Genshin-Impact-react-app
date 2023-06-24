@@ -1,5 +1,6 @@
 import "../style/base.css";
 import "../style/gameRating.css";
+import { dateUtils } from "../utils/dateUtils";
 import SimpleRating from "./SimpleRating";
 const { React, useEffect, useState } = require("react");
 
@@ -78,14 +79,6 @@ export default function GameRating() {
     }
   }, [accessToken]);
 
-  function formatDate(timestamp) {
-    const date = new Date(timestamp * 1000);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  }
-
   return (
     <div className="rating-page">
       {gameData && (
@@ -101,7 +94,7 @@ export default function GameRating() {
             <div className="game-summary">
               <div className="game-title-wrapper">
                 <h1>{gameData.name}</h1>
-                <h2>{formatDate(gameData.first_release_date)}</h2>
+                <h2>{dateUtils(gameData.first_release_date)}</h2>
                 <span className="storyLine">{gameData.storyline}</span>
               </div>
             </div>

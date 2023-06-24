@@ -18,6 +18,8 @@ import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 import Gameshow from './components/GameShow';
 import Comment from "./components/Comment";
 import GameRating from "./components/GameRating"
+import JoinedUsers from "./components/JoinedUsers"
+import CommentDetail from "./components/CommentDetail";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -64,6 +66,7 @@ root.render(
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/verify-user" element={<VerifyUser />} />
+            <Route path="/joined-users" element={<JoinedUsers />}/>
             {/* <Route path="/app/profile" element={<Profile />} />
             <Route path="/app/debugger" element={<AuthDebugger />} />
             <Route path="/app/games" element={<Game_list />} />
@@ -80,6 +83,7 @@ root.render(
               <Route index element={<Gameshow />} />
               <Route path="/app/profile" element={<Profile />} />
               <Route path="/app/comment" element={<Comment />} />
+              <Route path="/app/comment/detail/:commentId" element={<CommentDetail />} />
               <Route path="/app/rating" element={<GameRating />} />
               <Route path="/app/debugger" element={<AuthDebugger />} />
             </Route>

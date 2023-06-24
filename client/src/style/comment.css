@@ -1,4 +1,3 @@
-
 .content-textarea {
   width: 920px;
   margin: 5px 38px;
@@ -56,6 +55,15 @@
   background-color: rgba(218, 229, 236, 0.411);
 }
 
+.comment-item .detailBtn {
+  background-color: lightslategrey;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 755px;
+}
+
 .comment-item .deleteBtn {
   background-color: #047680;
   color: white;
@@ -70,7 +78,6 @@
   border: none;
   padding: 5px 15px;
   cursor: pointer;
-  margin-left: 800px;
 }
 
 .comment .addBtn {

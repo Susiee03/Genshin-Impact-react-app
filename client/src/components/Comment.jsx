@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { useParams, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuthToken } from "../AuthTokenContext";
 import userComment from "../hooks/userComment";
 import "../style/base.css";
@@ -13,6 +13,8 @@ export default function Comment() {
   const [editedCommentId, setEditedCommentId] = useState(null);
   const [editedContent, setEditedContent] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+
+  const navigate = useNavigate();
 
   // Add Comment
   const addComment = async (content) => {
@@ -101,6 +103,40 @@ export default function Comment() {
     }
   };
 
+  // Get comment by id
+  const getCommentById = async (commentId) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/comments/${commentId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        const comment = await response.json();
+        return comment;
+      } else {
+        console.error("Error retrieving comment:", response.status);
+      }
+    } catch (error) {
+      console.error("Error retrieving comment:", error);
+    }
+  };
+
+  const handleDetailClick = async (commentId) => {
+    try {
+      const comment = await getCommentById(commentId);
+      navigate(`/app/comment/detail/${commentId}`, { state: comment });
+    } catch (error) {
+      console.error("Error retrieving comment:", error);
+    }
+  };
+
   // Render form
   return (
     <div>
@@ -121,7 +157,9 @@ export default function Comment() {
             onChange={(e) => setContent(e.target.value)}
             maxLength="40"
           ></textarea>
-          <button className="addBtn" onClick={() => addComment(content)}>Add Comment</button>
+          <button className="addBtn" onClick={() => addComment(content)}>
+            Add Comment
+          </button>
         </div>
       )}
       <ul className="comment-list">
@@ -154,6 +192,12 @@ export default function Comment() {
             ) : (
               <div>
                 <p>{comment.content}</p>
+                <button
+                  className="detailBtn"
+                  onClick={() => handleDetailClick(comment.id)}
+                >
+                  Detail
+                </button>
                 <button
                   className="editBtn"
                   onClick={() => {
