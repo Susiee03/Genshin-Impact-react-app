@@ -3,36 +3,21 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const useAuthToken = () => useContext(AuthTokenContext);
 
-// const requestedScopes = [
-//   "profile",
-//   "email",
-//   "read:games",
-//   "read:user",
-//   "edit:game",
-//   "edit:user",
-//   "delete:game",
-//   "delete:user",
-//   "write:user",
-//   "write:game",
-// ];
 
 const requestedScopes = [
   "profile",
   "email",
   "read:comment",
-  "write: comment",
+  "write:comment",
   "edit:comment",
   "delete:comment",
   "read:rating",
-  "write: rating",
+  "write:rating",
   "edit:rating",
   "read:user",
-  "edit:game",
   "edit:user",
-  "delete:game",
   "delete:user",
   "write:user",
-  "write:game",
 ];
 
 const AuthTokenContext = React.createContext();
