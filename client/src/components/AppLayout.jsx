@@ -1,15 +1,13 @@
 import "../style/base.css";
 import "../style/appLayout.css";
 import React from "react";
-import { Outlet, Link, useNavigate } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
+import { Outlet, Link} from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import Button from "@material-ui/core/Button";
 
-const UserContext = React.createContext();
 
 export default function AppLayout() {
-  const { user, isLoading, logout } = useAuth0();
+  const { isLoading, logout } = useAuth0();
 
   if (isLoading) {
     return <div className="loading">Loading...</div>;
