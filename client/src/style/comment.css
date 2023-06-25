@@ -108,6 +108,27 @@
 /* Desktop */
 @media (max-width: 600px) {
 
+  .comment {
+    border-radius: 1rem;
+    width: 1000px;
+    margin-left: 140px;
+    background-color: rgba(200, 231, 237, 0.65);
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.35);
+  }
+  
+  .comment-list {
+    padding: 0 2rem;
+    border-radius: 1rem;
+    width: 1000px;
+    margin-top: 150px;
+    margin-left: 140px;
+    max-height: 580px;
+    overflow: auto;
+    background-color: rgba(223, 244, 248, 0.65);
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.35);
+    line-height: 25px;
+  }
+
   .content-textarea,
   .edit-textarea {
     width: 95%;
@@ -125,7 +146,6 @@
 
   .comment-list {
     width: 95%;
-    margin-top: 10px;
     margin-left: 5px;
     margin-right: 5px;
     padding: 0 1rem;
