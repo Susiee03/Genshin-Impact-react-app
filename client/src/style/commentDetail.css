@@ -24,3 +24,20 @@
   font-weight: 700;
   color: #333;
 }
+
+/* Desktop */
+@media (max-width: 900px) {
+
+  .comment-detail {
+    width: auto;
+    text-align: left;
+    margin-top: 200px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .comment-info {
+    width: auto;
+    padding: 20px;
+  }
+}

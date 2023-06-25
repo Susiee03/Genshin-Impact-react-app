@@ -26,8 +26,8 @@ h2 {
 
 .star-rating {
   position: absolute;
-  top: 66%;
-  left: 38%;
+  top: 100%;
+  left: 40%;
 }
 
 .rating-circle {
@@ -64,4 +64,144 @@ h2 {
   transform: translate(-50%, -50%);
   font-size: 40px;
   color: #000;
+}
+
+/* Desktop */
+@media (max-width: 900px) {
+  .rating-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .game-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .game-cover {
+    margin-bottom: 10px;
+  }
+
+  .game-summary {
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .game-summary h1,
+  .game-summary h2 {
+    margin-bottom: 5px;
+  }
+
+  .game-summary .storyLine {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.5;
+  }
+
+  .game-rating {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .rating-circle {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin-top: 10px;
+  }
+
+  .rating-circle .title {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .rating-circle::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: rgba(249, 250, 250, 0.65);
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.35);
+  }
+
+  .rating-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #000;
+  }
+
+  .star-rating {
+    margin-top: 280px;
+  }
+
+  .game-summary {
+    margin-left: 10px;
+    text-align: left;
+  }
+
+  .game-summary h1,
+  .game-summary h2 {
+    margin-bottom: 5px;
+    margin-top: 10px;
+  }
+
+  .game-summary .storyLine {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .rating-circle {
+    margin-left: 0;
+    margin-top: 50px;
+  }
+
+  .rating-circle .title {
+    font-size: 24px;
+    /* margin-top: 10px; */
+  }
+
+  .rating-circle::before {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+  }
+
+  .rating-value {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+  }
+
+  .star-rating {
+    overflow-x: auto;
+  }
+
+  .star {
+    width: 16px;
+    height: 16px;
+    background-size: contain;
+  }
 }

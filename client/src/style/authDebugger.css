@@ -5,3 +5,13 @@
   width: 500px;
   margin: 0 auto;
 }
+
+/* Desktop */
+@media (max-width: 600px) {
+  .debugger-card {
+    width: 95%;
+    margin-top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

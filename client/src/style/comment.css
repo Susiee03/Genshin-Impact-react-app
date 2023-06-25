@@ -104,3 +104,49 @@
 .editBtn:hover {
   opacity: 0.8;
 }
+
+/* Desktop */
+@media (max-width: 600px) {
+
+  .content-textarea,
+  .edit-textarea {
+    width: 95%;
+    margin: 5px 5px;
+  }
+
+  .comment {
+    width: 100%;
+    margin-top: 180px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    position: relative;
+  }
+
+  .comment-list {
+    width: 95%;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 0 1rem;
+  }
+
+  .comment-item {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 10px;
+    position: relative;
+
+  }
+
+  .comment-item .deleteBtn,
+  .comment-item .detailBtn,
+  .comment .addBtn,
+  .comment-item .editBtn,
+  .comment-item .saveBtn {
+    margin: auto;
+    width: 95%;
+  }
+}

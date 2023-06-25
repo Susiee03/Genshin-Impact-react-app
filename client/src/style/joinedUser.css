@@ -19,3 +19,19 @@
   justify-content: center;
   padding: 30px;
 }
+
+/* Desktop*/
+@media (max-width: 600px) {
+  .joined-users {
+    width: 90%;
+    margin: 100px auto;
+  }
+
+  .joined-users h2 {
+    font-size: 1.5rem;
+  }
+
+  .center-button {
+    padding: 20px;
+  }
+}

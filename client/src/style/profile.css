@@ -15,3 +15,36 @@
 .user-profile .MuiListItem-root {
   padding: 30px 30px;
 }
+
+
+/* Desktop */
+@media (max-width: 600px) {
+  .user-profile {
+    width: auto;
+    margin-top: 200px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px;
+  }
+
+  .user-profile .MuiListItem-root {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px 0;
+  }
+
+  .user-profile .MuiListItemIcon-root {
+    margin-right: 10px;
+    min-width: auto;
+    margin-top: 2px;
+  }
+
+  .user-profile .MuiListItemText-root {
+    margin-left: 10px;
+    padding-left: 10px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+  }
+}
