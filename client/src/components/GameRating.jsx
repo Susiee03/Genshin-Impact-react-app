@@ -105,8 +105,8 @@ export default function GameRating() {
               <strong className="title">
                 Based on {gameData.rating_count} member ratings
               </strong>
-              <div className="rating-value">{Math.floor(gameData.rating)}</div>
             </div>
+            <div className="rating-value">{Math.floor(gameData.rating)}</div>
             <div className="star-rating">
               <SimpleRating />
             </div>
