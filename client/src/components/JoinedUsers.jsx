@@ -7,8 +7,6 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
-import { formatDate } from "../utils/formatDate";
 import "../style/joinedUser.css";
 
 export default function JoinedUsers() {
