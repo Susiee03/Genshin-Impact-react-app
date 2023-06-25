@@ -18,6 +18,10 @@ export default function Comment() {
 
   // Add Comment
   const addComment = async (content) => {
+    if (content.trim() === "") {
+      alert("Please enter a comment.");
+    }
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/comments`,
@@ -142,11 +146,6 @@ export default function Comment() {
     <div>
       {!isEditing && (
         <div className="comment">
-          {/* <input
-            type="textarea"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          /> */}
           <textarea
             id="textarea"
             name="textarea"
@@ -167,11 +166,6 @@ export default function Comment() {
           <div key={comment.id} className="comment-item">
             {isEditing && editedCommentId === comment.id ? (
               <div>
-                {/* <input
-                  type="text"
-                  value={editedContent}
-                  onChange={(e) => setEditedContent(e.target.value)}
-                /> */}
                 <textarea
                   id="edit-textarea"
                   name="edit-textarea"
