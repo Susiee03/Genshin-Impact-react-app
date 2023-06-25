@@ -1,3 +1,8 @@
+.wrapper {
+  width: 1024px;
+  margin: 0 auto;
+}
+
 .game-header {
   display: flex;
 }
@@ -5,6 +10,7 @@
 .game-rating {
   height: 200px;
   text-align: center;
+  position: relative;
 }
 
 .game-summary {
@@ -26,16 +32,15 @@ h2 {
 
 .star-rating {
   position: absolute;
-  top: 100%;
-  left: 40%;
+  top: 125px;
+  left: 420px;
 }
 
 .rating-circle {
-  position: relative;
-  width: 100%;
+  position: absolute;
   height: 100%;
   margin-top: 50px;
-  margin-left: 10px;
+  margin-left: 405px;
 }
 
 .rating-circle .title {
@@ -47,8 +52,8 @@ h2 {
 .rating-circle::before {
   content: "";
   position: absolute;
-  top: 60%;
-  left: 60%;
+  top: 120px;
+  left: 310px;
   transform: translate(-50%, -50%);
   width: 100px;
   height: 100px;
@@ -59,8 +64,8 @@ h2 {
 
 .rating-value {
   position: absolute;
-  top: 60%;
-  left: 60%;
+  top: 168px;
+  left: 717px;
   transform: translate(-50%, -50%);
   font-size: 40px;
   color: #000;
@@ -181,22 +186,25 @@ h2 {
   }
 
   .rating-circle::before {
-    top: 50%;
-    left: 50%;
+    position: absolute;
+    top: 120px;
+    left: 250px;
     transform: translate(-50%, -50%);
     width: 80px;
     height: 80px;
   }
 
   .rating-value {
-    top: 50%;
-    left: 50%;
+    top: 170px;
+    left: 250px;
     transform: translate(-50%, -50%);
     font-size: 24px;
   }
 
   .star-rating {
-    overflow-x: auto;
+    position: absolute;
+    top: -160px;
+    left: 15px;
   }
 
   .star {
