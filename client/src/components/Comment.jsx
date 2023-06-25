@@ -20,6 +20,7 @@ export default function Comment() {
   const addComment = async (content) => {
     if (content.trim() === "") {
       alert("Please enter a comment.");
+      return;
     }
 
     try {
@@ -48,6 +49,11 @@ export default function Comment() {
 
   // Update Comment
   const handleEditComment = async (commentId) => {
+    if (editedContent.trim() === "") {
+      alert("Please enter the updated content.");
+      return;
+    }
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/comments/${commentId}`,
