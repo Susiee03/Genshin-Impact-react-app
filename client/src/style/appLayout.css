@@ -84,6 +84,16 @@ nav li:first-child {
   text-align: center;
 }
 
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: lightcoral;
+  color: aliceblue;
+  height: 100%;
+  font-size: 36px;
+}
+
 @media screen and (max-width: 768px) {
   .header {
     display: flex;
