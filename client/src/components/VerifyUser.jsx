@@ -19,8 +19,6 @@ export default function VerifyUser() {
         },
       });
       const user = await data.json();
-      console.log(11111111111111);
-      console.log(user);
       if (user.auth0Id) {
         navigate("/app");
       }
