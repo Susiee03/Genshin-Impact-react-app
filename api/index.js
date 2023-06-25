@@ -270,9 +270,6 @@ app.get("/users/joined-users", async (req, res) => {
     const joinedUsers = await prisma.user.findMany(
       {
         take: 5,
-        orderBy: {
-          createdAt: 'desc'
-        }
       }
     );
     res.json(joinedUsers);
@@ -292,17 +289,22 @@ app.post("/verify-user", requireAuth, async (req, res) => {
   console.log("here")
   console.log(JSON.stringify(req.auth.payload))
   console.log(name);
-  const extractedName = name.split("@")[0];
+  const extractedName = email.split("@")[0];
   const user = await prisma.user.findUnique({
     where: {
       auth0Id,
     },
   });
 
-  console.log(user)
   if (user) {
     res.json(user);
   } else {
+    console.log('auth0Id');
+    console.log(auth0Id);
+    console.log('name');
+    console.log(name);
+    console.log('email');
+    console.log(email);
     try {
       const newUser = await prisma.user.create({
         data: {
