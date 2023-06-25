@@ -32,9 +32,6 @@ const requestedScopes = [
   "write:game",
 ];
 
-const container = document.getElementById("root");
-const twitchClientId = process.env.TWITCH_APP_CLIENT_ID;
-const twitchClientSecret = process.env.TWITCH_APP_CLIENT_SECRET;
 
 function RequireAuth({ children }) {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -61,12 +58,7 @@ root.render(
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/verify-user" element={<VerifyUser />} />
-            <Route path="/joined-users" element={<JoinedUsers />}/>
-            {/* <Route path="/app/profile" element={<Profile />} />
-            <Route path="/app/debugger" element={<AuthDebugger />} />
-            <Route path="/app/games" element={<Game_list />} />
-            <Route path="games/:id" element={<GameDetail />} />
-            <Route path="games/:id/rating" element={<UserRating />} /> */}
+            <Route path="/joined-users" element={<JoinedUsers />} />
             <Route
               path="app"
               element={
