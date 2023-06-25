@@ -51,10 +51,7 @@ export default function JoinedUsers() {
                 <AccountCircleIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText
-              primary={user.name}
-              secondary={formatDate(user.createdAt)}
-            />
+            <ListItemText primary={user.name} secondary={user.createdAt} />
           </ListItem>
         ))}
       </List>
