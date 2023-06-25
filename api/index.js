@@ -4,11 +4,6 @@ const cors = require("cors");
 const { PrismaClient } = require("@prisma/client");
 const expressOAuth2JwtBearer = require('express-oauth2-jwt-bearer');
 const auth = expressOAuth2JwtBearer.auth;
-// import { auth } from  'express-oauth2-jwt-bearer'
-// import express from "express";
-// import morgan from "morgan";
-// import cors from "cors";
-// import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -36,7 +31,7 @@ app.post("/ratings", requireAuth, async (req, res) => {
   const auth0Id = req.auth.payload.sub;
 
   if (!rating) {
-    return res.status(400).send("Rating is required.");
+    return res.status(401).send("Rating is required.");
   }
 
   try {
@@ -53,7 +48,6 @@ app.post("/ratings", requireAuth, async (req, res) => {
     });
 
     if (existingRating) {
-      // return res.status(400).json({ error: "Rating already exists for this user and game" });
       const updatedRating = await prisma.rating.update({
         where: {
           id: existingRating.id,
@@ -86,6 +80,10 @@ app.post("/ratings", requireAuth, async (req, res) => {
 app.put("/ratings/:ratingId", requireAuth, async (req, res) => {
   const ratingId = parseInt(req.params.ratingId);
   const { rating } = req.body;
+
+  if (!ratingId || !rating) {
+    return res.status(401).send('Incorrect input values')
+  }
 
   try {
     const updatedRating = await prisma.rating.update({
@@ -132,6 +130,11 @@ app.get("/ratings", requireAuth, async (req, res) => {
 app.post("/comments", requireAuth, async (req, res) => {
   const { content } = req.body;
   const auth0Id = req.auth.payload.sub;
+
+  if (!content) {
+    return res.status(401).send("Content is required.");
+  }
+
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -159,6 +162,10 @@ app.post("/comments", requireAuth, async (req, res) => {
 app.delete("/comments/:commentId", requireAuth, async (req, res) => {
   const commentId = parseInt(req.params.commentId);
 
+  if (!commentId) {
+    return res.status(401).send("CommentId is required.");
+  }
+
   try {
     await prisma.comment.delete({
       where: {
@@ -177,6 +184,10 @@ app.delete("/comments/:commentId", requireAuth, async (req, res) => {
 app.put("/comments/:commentId", requireAuth, async (req, res) => {
   const commentId = parseInt(req.params.commentId);
   const { content } = req.body;
+
+  if (!commentId || !content) {
+    return res.status(401).send('Incorrect input values')
+  }
 
   try {
     const updatedComment = await prisma.comment.update({
@@ -198,6 +209,10 @@ app.put("/comments/:commentId", requireAuth, async (req, res) => {
 // Get comment
 app.get("/comments/:commentId", requireAuth, async (req, res) => {
   const commentId = parseInt(req.params.commentId);
+
+  if (!commentId) {
+    return res.status(401).send("CommentId is required.");
+  }
 
   try {
     const comment = await prisma.comment.findUnique({
@@ -239,6 +254,10 @@ app.get("/comments", requireAuth, async (req, res) => {
 app.get("/users/:userId/comments", requireAuth, async (req, res) => {
   const userId = parseInt(req.params.userId);
 
+  if (!userId) {
+    return res.status(401).send("UserId is required.");
+  }
+
   try {
     const userComments = await prisma.comment.findMany({
       where: {
@@ -253,7 +272,7 @@ app.get("/users/:userId/comments", requireAuth, async (req, res) => {
   }
 });
 
-// get Profile information of authenticated user
+// Get Profile information of authenticated user
 app.get("/me", requireAuth, async (req, res) => {
   const auth0Id = req.auth.payload.sub;
   const user = await prisma.user.findUnique({
@@ -285,10 +304,10 @@ app.post("/verify-user", requireAuth, async (req, res) => {
   const email = req.auth.payload[`${process.env.AUTH0_AUDIENCE}/email`];
   const name = req.auth.payload[`${process.env.AUTH0_AUDIENCE}/name`];
 
-  console.log(email);
-  console.log("here")
-  console.log(JSON.stringify(req.auth.payload))
-  console.log(name);
+  // console.log(email);
+  // console.log("here")
+  // console.log(JSON.stringify(req.auth.payload))
+  // console.log(name);
   const extractedName = email.split("@")[0];
   const user = await prisma.user.findUnique({
     where: {
@@ -299,12 +318,12 @@ app.post("/verify-user", requireAuth, async (req, res) => {
   if (user) {
     res.json(user);
   } else {
-    console.log('auth0Id');
-    console.log(auth0Id);
-    console.log('name');
-    console.log(name);
-    console.log('email');
-    console.log(email);
+    // console.log('auth0Id');
+    // console.log(auth0Id);
+    // console.log('name');
+    // console.log(name);
+    // console.log('email');
+    // console.log(email);
     try {
       const newUser = await prisma.user.create({
         data: {
@@ -322,10 +341,16 @@ app.post("/verify-user", requireAuth, async (req, res) => {
   }
 });
 
-// Use api proxy requests igdb api to avoid cors
+// Call External Api https://api.igdb.com/v4/games to get the info of the specific game Genshine Impact
+// Write this api in service to keep the same domain avoiding cors problem
 app.post('/api/games', async (req, res) => {
   const url = 'https://api.igdb.com/v4/games';
   const { clientId, accessToken } = req.body;
+
+  if (!clientId || !accessToken) {
+    return res.status(401).send("Incorrect input values.");
+  }
+
   const fetch = await import('node-fetch');
   const response = await fetch.default(url, {
     method: 'POST',
