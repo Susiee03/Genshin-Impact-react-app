@@ -1,17 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import * as ReactDOMClient from "react-dom/client";
-import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import reportWebVitals from './reportWebVitals';
 import AppLayout from "./components/AppLayout";
 import Home from "./components/HomePage";
 import NotFound from "./components/NotFound";
 import VerifyUser from "./components/VerifyUser";
 import AuthDebugger from "./components/AuthDebugger";
-import Game_list from "./components/Games";
-import GameDetail from "./components/GameDetail";
-import UserRating from "./components/UserRating"
 import Profile from "./components/Profile"
 import { AuthTokenProvider } from "./AuthTokenContext";
 import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
