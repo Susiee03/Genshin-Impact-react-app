@@ -289,6 +289,9 @@ app.get("/users/joined-users", async (req, res) => {
     const joinedUsers = await prisma.user.findMany(
       {
         take: 5,
+        orderBy: {
+          id: 'desc'
+        }
       }
     );
     res.json(joinedUsers);
@@ -308,7 +311,10 @@ app.post("/verify-user", requireAuth, async (req, res) => {
   // console.log("here")
   // console.log(JSON.stringify(req.auth.payload))
   // console.log(name);
-  const extractedName = email.split("@")[0];
+  let extractedName = name;
+  if (email.includes("@")) {
+    extractedName = email.split("@")[0];
+  }
   const user = await prisma.user.findUnique({
     where: {
       auth0Id,
