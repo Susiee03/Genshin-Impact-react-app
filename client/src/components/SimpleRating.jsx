@@ -9,8 +9,6 @@ export default function SimpleRating() {
   const { accessToken } = useAuthToken();
 
   const fetchRating = async () => {
-    console.log("accessToken");
-    console.log(accessToken);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/ratings`, {
         method: "GET",
