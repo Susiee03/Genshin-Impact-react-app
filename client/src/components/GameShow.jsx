@@ -6,7 +6,11 @@ export default function Gameshow() {
     <div>
       <div className="introduction">
         <p>
-          <a href="https://genshin.hoyoverse.com/en/" target="_blank" rel="noreferrer">
+          <a
+            href="https://genshin.hoyoverse.com/en/home"
+            target="_blank"
+            rel="noreferrer"
+          >
             Genshin Impact{" "}
           </a>
           is an action role-playing game developed by miHoYo, and published by
