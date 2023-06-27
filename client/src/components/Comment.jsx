@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthToken } from "../AuthTokenContext";
 import userComment from "../hooks/userComment";
@@ -15,6 +15,48 @@ export default function Comment() {
   const [isEditing, setIsEditing] = useState(false);
 
   const navigate = useNavigate();
+
+  // Verify if the user has permission to operate the current comment
+  const isCurrentUserComment = async (comment) => {
+    const currentUser = await fetchUser();
+    console.log("---currentUser---");
+    console.log(currentUser);
+    if (comment.userId !== currentUser.id) {
+      alert("You are not allowed to operate on this comment");
+      return false;
+    }
+    return true;
+  };
+
+  // Get User info
+  const fetchUser = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/users/user-info`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const users = await response.json();
+        return users;
+      } else {
+        console.error("Error get user info:", response.status);
+      }
+    } catch (error) {
+      console.error("Error get user info:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (accessToken) {
+      fetchUser();
+    }
+  }, [accessToken]);
 
   // Add Comment
   const addComment = async (content) => {
@@ -168,56 +210,66 @@ export default function Comment() {
         </div>
       )}
       <ul className="comment-list">
-        {userComments.map((comment) => (
-          <div key={comment.id} className="comment-item">
-            {isEditing && editedCommentId === comment.id ? (
-              <div>
-                <textarea
-                  id="edit-textarea"
-                  name="edit-textarea"
-                  className="edit-textarea"
-                  rows="5"
-                  required
-                  value={editedContent}
-                  onChange={(e) => setEditedContent(e.target.value)}
-                  maxLength="40"
-                ></textarea>
-                <button
-                  className="saveBtn"
-                  onClick={() => handleEditComment(comment.id)}
-                >
-                  Save
-                </button>
-              </div>
-            ) : (
-              <div>
-                <p>{comment.content}</p>
-                <button
-                  className="detailBtn"
-                  onClick={() => handleDetailClick(comment.id)}
-                >
-                  Detail
-                </button>
-                <button
-                  className="editBtn"
-                  onClick={() => {
-                    setEditedCommentId(comment.id);
-                    setEditedContent(comment.content);
-                    setIsEditing(true);
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  className="deleteBtn"
-                  onClick={() => deleteComment(comment.id)}
-                >
-                  Delete
-                </button>
-              </div>
-            )}
-          </div>
-        ))}
+        {userComments
+          .sort((a, b) => b.id - a.id)
+          .map((comment) => (
+            <div key={comment.id} className="comment-item">
+              {isEditing && editedCommentId === comment.id ? (
+                <div>
+                  <textarea
+                    id="edit-textarea"
+                    name="edit-textarea"
+                    className="edit-textarea"
+                    rows="5"
+                    required
+                    value={editedContent}
+                    onChange={(e) => setEditedContent(e.target.value)}
+                    maxLength="40"
+                  ></textarea>
+                  <button
+                    className="saveBtn"
+                    onClick={() => handleEditComment(comment.id)}
+                  >
+                    Save
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <p>{comment.content}</p>
+                  <button
+                    className="detailBtn"
+                    onClick={() => handleDetailClick(comment.id)}
+                  >
+                    Detail
+                  </button>
+                  <button
+                    className="editBtn"
+                    onClick={async () => {
+                      const isCurrentUser = await isCurrentUserComment(comment);
+                      if (isCurrentUser) {
+                        setEditedCommentId(comment.id);
+                        setEditedContent(comment.content);
+                        setIsEditing(true);
+                      }
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="deleteBtn"
+                    onClick={async () => {
+                      const isCurrentUser = await isCurrentUserComment(comment);
+                      if (isCurrentUser) {
+                        deleteComment(comment.id);
+                      }
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
       </ul>
     </div>
   );

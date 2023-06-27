@@ -301,6 +301,24 @@ app.get("/users/joined-users", async (req, res) => {
   }
 });
 
+// Get uid by auth0Id
+app.get("/users/user-info", requireAuth, async (req, res) => {
+  const auth0Id = req.auth.payload.sub;
+  try {
+    const userInfo = await prisma.user.findUnique(
+      {
+        where: {
+          auth0Id,
+        },
+      }
+    );
+    res.json(userInfo);
+  } catch (error) {
+    console.error("Error retrieving user info:", error);
+    res.status(500).json({ error: "Failed to retrieve user info:" });
+  }
+});
+
 // verify user status, if not registered in our database we will create it
 app.post("/verify-user", requireAuth, async (req, res) => {
   const auth0Id = req.auth.payload.sub;
