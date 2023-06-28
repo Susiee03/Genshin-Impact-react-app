@@ -31,7 +31,7 @@ The app was developed using React, Node and Prisma. The production deployment us
 setting the related .env properly, run "npm run start" will start the app locally. 
 
 ## Usage of external API
-The external API we choose: https://api-docs.igdb.com/#getting-started 
+The external API we choose: [https://api.igdb.com/v4/games]
 
 We put that in game rating, it can be found under client/src/components/GameRating, line 24. 
 
